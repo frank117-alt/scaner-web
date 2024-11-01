@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="5">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        .task-result {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+        .task-status {
+            font-weight: bold;
+        }
+        .task-result .success {
+            color: green;
+        }
+        .task-result .failure {
+            color: red;
+        }
+        .task-result .pending {
+            color: orange;
+        }
+    </style>
+    
+</head>
+<body>
+
+    <h1>Task Results</h1>
+
+    <!-- Check if there are any errors -->
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% else %}
+        <!-- Loop over each task and show the status and result -->
+        <div class="task-result">
+            <h2>Task One</h2>
+            <p class="task-status">Status: 
+                {% if results.task_one.status == 'SUCCESS' %}
+                    <span class="success">Completed</span>
+                {% elif results.task_one.status == 'FAILURE' %}
+                    <span class="failure">Failed</span>
+                {% else %}
+                    <span class="pending">{{ results.task_one.status }}</span>
+                {% endif %}
+            </p>
+            <p>Result: 
+                {% if results.task_one.status == 'SUCCESS' %}
+                    {{ results.task_one.result }}
+                {% elif results.task_one.status == 'FAILURE' %}
+                    An error occurred: {{ results.task_one.result }}
+                {% else %}
+                    Task is still in progress...
+                {% endif %}
+            </p>
+        </div>
+
+        <div class="task-result">
+            <h2>Task Two</h2>
+            <p class="task-status">Status: 
+                {% if results.task_two.status == 'SUCCESS' %}
+                    <span class="success">Completed</span>
+                {% elif results.task_two.status == 'FAILURE' %}
+                    <span class="failure">Failed</span>
+                {% else %}
+                    <span class="pending">{{ results.task_two.status }}</span>
+                {% endif %}
+            </p>
+            <p>Result: 
+                {% if results.task_two.status == 'SUCCESS' %}
+                    {{ results.task_two.result }}
+                {% elif results.task_two.status == 'FAILURE' %}
+                    An error occurred: {{ results.task_two.result }}
+                {% else %}
+                    Task is still in progress...
+                {% endif %}
+            </p>
+        </div>
+    {% endif %}
+
+</body>
+</html>

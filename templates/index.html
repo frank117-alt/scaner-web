@@ -1,0 +1,172 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!--Alpine JS-->
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
+    <!--Boxicons-->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <!--Stripe-->
+    {%load static%}
+<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+
+        .panel {
+            background-color: #fff;
+            width: 50%;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .panel h2 {
+            margin-bottom: 20px;
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+        }
+
+        .search-input {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        .search-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .search-button:hover {
+            background-color: #0056b3;
+        }
+        .navbar {
+            background-color: #333;
+            padding: 10px 20px;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .navbar ul li {
+            margin-right: 20px;
+        }
+
+        .navbar ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar ul li a:hover {
+            color: #007bff;
+        }
+
+        /* Estilos responsivos */
+        @media (max-width: 600px) {
+            .navbar ul {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .navbar ul li {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+
+    
+</head>
+<body>
+    {% block navbar %}
+    
+    <nav class="navbar">
+        <ul>
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#">Quiénes somos</a></li>
+            <li><a href="#">Acerca de</a></li>
+        </ul>
+    </nav>
+
+    <div style="padding: 20px;">
+        <h1>Bienvenido a nuestro sitio web</h1>
+        <p>consulta ip o dominio</p>
+
+  
+    </div>
+    
+    {% endblock navbar %}
+    
+     <!-- Mostrar mensaje de error personalizado si el formulario no es válido -->
+    {% if error_message %}
+    <div class="error-messages">
+        <p style="color: red;">{{ error_message }}</p>
+    </div>
+{% endif %}
+
+<!-- Mostrar errores del formulario si existen -->
+{% if form.errors %}
+    <div class="error-messages">
+        <ul>
+            {% for field, errors in form.errors.items %}
+                <li>{{ field }}: {{ errors|striptags }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+    {% block content %}{% endblock content %}
+    <div class="panel">
+
+        <form   method='post' action="{% url  'home'%}" >
+
+            {%csrf_token %}
+
+        <h2>Buscar </h2>
+
+
+        {{form.host}}
+        <br>
+        
+        <button  type="submit" class="search-button">Buscar</button>
+    </form>
+
+    </div>
+    {% block footer %}{% endblock footer %}
+
+    {% block javascript %}{% endblock javascript %}
+</body>
+</html>
